@@ -1,0 +1,29 @@
+Description: Fix infinite loop (hang) when IMAP server closes connection
+Author: Jered Floyd <jered@convivian.com>
+Origin: upstream, https://github.com/cyrusimap/cyrus-sasl/commit/76dd88987eb7a916cc56585ccf38232c646483d8
+Bug: https://bugzilla.cyrusimap.org/show_bug.cgi?id=3920
+Bug-Debian: https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=815208
+Bug-Ubuntu: https://bugs.launchpad.net/ubuntu/+source/cyrus-sasl2/+bug/997217
+Last-Update: 2018-10-24
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/saslauthd/auth_rimap.c
++++ b/saslauthd/auth_rimap.c
+@@ -494,7 +494,7 @@
+         while( select (fds, &perm, NULL, NULL, &timeout ) >0 ) {
+            if ( FD_ISSET(s, &perm) ) {
+               ret = read(s, rbuf+rc, sizeof(rbuf)-rc);
+-              if ( ret<0 ) {
++              if ( ret<=0 ) {
+                  rc = ret;
+                  break;
+               } else {
+@@ -607,7 +607,7 @@
+         while( select (fds, &perm, NULL, NULL, &timeout ) >0 ) {
+            if ( FD_ISSET(s, &perm) ) {
+               ret = read(s, rbuf+rc, sizeof(rbuf)-rc);
+-              if ( ret<0 ) {
++              if ( ret<=0 ) {
+                  rc = ret;
+                  break;
+               } else {

@@ -1,3 +1,10 @@
+cyrus-sasl2 (2.1.26.dfsg1-14ubuntu0.1) xenial; urgency=medium
+
+  * d/p/dont_hang_when_imap_closes.patch: Don't hang when IMAP
+    server closes connection. (LP: #997217)
+
+ -- Andreas Hasenack <andreas@canonical.com>  Wed, 24 Oct 2018 14:51:00 -0300
+
 cyrus-sasl2 (2.1.26.dfsg1-14build1) xenial; urgency=medium
 
   * Rebuild against libmysqlclient20.
