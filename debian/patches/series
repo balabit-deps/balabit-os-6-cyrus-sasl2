@@ -33,3 +33,4 @@ bug715040.patch
 early-hangup.patch
 CVE-2013-4122.patch
 dont_hang_when_imap_closes.patch
+CVE-2019-19906.patch
